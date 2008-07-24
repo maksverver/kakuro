@@ -1,0 +1,20 @@
+Normal priority:
+- Let program give a hint
+- Display incorrect cells/rows on sheet
+- Display candidates for grid cells and sums in status bar
+- Puzzle generation
+
+Low priority:
+- Test solver for harder/larger puzzles
+- Some more icons for actions/tool bar
+(Printing:)
+- High resolution printing
+- User-configurable page lay-out
+- Print sheet names above sheets
+
+Later:
+- Display possibilities for current cell and current row/column in a side window
+
+Periodically:
+- Add "What's this?" data to GUI
+- Check tab order for GUI

@@ -1,0 +1,25 @@
+The Kakuro file format consist of UTF-8 encoded plain text lines, which
+denote commands, one per line.
+
+Leading and trailing spaces on a line are ignored. Lines that start with a
+hash (#) character (after optional leading whitespace) are ignored, as are lines
+consisting entirely of whitespace. Other lines consist of words, which are
+strings seperated by consecutive whitespace.
+
+Words containing whitespace may be denoted by surrounding them with double
+quotes ("). Inside a quoted string, special characters are escaped using a
+backslash (\) followed by the character being escaped.
+
+The file must start with a command denoting the file format used:
+    %version kakuro 1 0
+
+The file may contain an arbitrary number of Kakuro grids, encoded in a single
+word. All other commands must start their first word with a character not used
+in the grid encoding.
+
+A file may define properties, consisting of two words. The first word starts
+with an at-sign (@) followed by the property name; the second word is the
+property value. For example:
+    @author "John Doe"
+Properties apply to the last grid defined before the property definition.
+Properties defined before any grid apply to the entire file.

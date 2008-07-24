@@ -1,0 +1,108 @@
+A character encoding is proposed, to encode standard Kakuro grids of varying
+sizes, with optional clues, candidates and digits. The string representation
+is compact and uses only alphanumerical characters, the minus sign and the
+underscore, so that thay may be freely exchanged. The encoding does require
+a certain level of sophistication in the parser, for the sake of compactness.
+
+All data is encoded using 6-bit bytes (values 0 upto 64) which are encoded
+using 64 ASCII (or EBCDIC) characters:
+    ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+
+For conversion-by-hand, the following table is useful:
+
+    | 0 1 2 3 4 5 6 7 8 9
+ ---+---------------------
+  0 | A B C D E F G H I J
+ 10 | K L M N O P Q R S T
+ 20 | U V W X Y Z a b c d
+ 30 | e f g h i j k l m n
+ 40 | o p q r s t u v w x
+ 50 | y z 0 1 2 3 4 5 6 7
+ 60 | 8 9 - _
+
+
+Strings of bits spanning multiple bytes are encoded so that the first 6 bits
+go into the first byte, etcetera. In each 6 bit chunk, the first bit is of
+the least significance. This diagram shows the values of bits in a byte:
+      4    32
+    2 |  16 |
+  1 | | 8 | |
+  _ _ _ _ _ _
+Bit strings are padded with zeros until their length is a multiple of 6.
+
+For example, the bitstring "11101011" is encoded as 111010;1100000 or 23;3 in
+decimal notation, and "XC" in the character encoding described above.
+
+
+Integers (notably the width and height of the grid) may be encoded using
+multiple bytes. Each of these bytes has the highest bit set, except the last
+one. The other five bits are used to denote the five bits of the integer,
+most significant bits appearing first. This is similar to a base 32 encoding
+of the number, where a bit is added to signal the end of the number.
+
+For example, the number 12345 is equal to 12*32^2 + 1*32^1 + 25*32^0, and
+is encoded using three bytes: 44, 33, 25.
+
+
+First, the grid (consisting of open and blocked cells) is encoded. Since the
+first row and first column of a standard grid contain no open cells, these are
+not explicitly encoded. The encoding starts with two integers for the height
+and width of the grid respectively, both minus 1 (usually two bytes, except
+when the width or height is larger than 32). Then follows a bitstring
+encoding the cells in the grid; bits set represent open cells. Cells are order
+by row, from top to bottom, and within each row from left to right.
+
+Suppose we wish to encode the following grid:
+    ######
+    #....#
+    #.....
+    ####..
+This grid has height 4, width 6, encoded as byte values 3 and 5 respectively,
+followed by a string of bits: 111101;111100;011000 (note the omission of the
+top row and left column, and the 3 padding bits added), In bytes: 47, 15, 6.
+The entire grid is encoded in characters is therefore "DFvPG".
+
+Suppose we want to add some sums, at the given positions:
+        17 16  7 11
+    30  _  _  _  _  5
+    23  _  _  _  _  _
+            3  _  _
+These sums are appended using one byte per sum (use 0 to denote the absence of
+a sum), but they must be ordered correctly. Sums are ordered according to the
+ordering of the open cells they point to (i.e. the leftmost cell for a horizontal
+cluster; the topmost cell for vertical cluster). When two sums point to the same
+cell the horizontal sum comes first. So, the sums for this grid are to be
+encoded in the following order:
+        B  C  D  E
+     A  _  _  _  _  G
+     F  _  _  _  _  _
+            H  _  _
+Note that A and B point to the same (first) cell, and that F comes before G
+ because G points down, not left (which is impossible). The values to be
+encoded are 30;17;16;7;11;23;5;3, in characters "eRQHLXFD". Append this to
+the grid encoding, so the full string becomes "DFvPGeRQHLXFD".
+
+Finally, we may wish to add candidates or digits in the cells. Candidates are
+encoded as a sequence of 9 bits, the first bit set if digit 1 is a candidate,
+etcetera. Single digits are encoded in the same format but with exactly one of
+the nine bits set. All bits may be set to zero to indicate that no candidate
+information is available for this cell. The 9-bit values for all open cells
+are concatenated and padded to a byte boundary.
+
+For example, if we want to encode the solution for the sample puzzle as well,
+we should encode these values:
+    # # # # # #
+    # 9 7 6 8 #
+    # 8 9 1 2 3
+    # # # # 1 2
+The first two characters are encoded as 000000;001000;000100 or "AEI" and
+the rest similarly, to form "AEIgAQACgBQAEIACA" (note again the padding).
+The complete puzzle string, containing grid lay-out, sums and digits,
+is encoded as: "DFvPGeRQHLXFDAEIgAQACgBQAEIACA".
+
+NOTE: at least grid data MUST be present in the string; other data is optional.
+If candidates/digits are to be added, sums must be added first (altough they
+may all be set to zero). If a string is truncated (i.e. contains less sums than
+clusters, or less candidates than open cells) it should not be rejected, but
+padded with zeroes until it is long enough to process. (This allows users to
+omit trailing 'A' characters.)

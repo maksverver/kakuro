@@ -1,0 +1,23 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>icons/About.png</file>
+<file>icons/CalculateCandidates.png</file>
+<file>icons/CalculateSums.png</file>
+<file>icons/CheckPuzzle.png</file>
+<file>icons/ClearCandidates.png</file>
+<file>icons/ClearDigits.png</file>
+<file>icons/ClearSums.png</file>
+<file>icons/FileNew.png</file>
+<file>icons/FileOpen.png</file>
+<file>icons/FilePrint.png</file>
+<file>icons/FileSave.png</file>
+<file>icons/Redo.png</file>
+<file>icons/SheetMoveLeft.png</file>
+<file>icons/SheetMoveRight.png</file>
+<file>icons/SheetNew.png</file>
+<file>icons/SheetRemove.png</file>
+<file>icons/SheetRename.png</file>
+<file>icons/SolvePuzzle.png</file>
+<file>icons/Undo.png</file>
+</qresource>
+</RCC>

@@ -1,0 +1,227 @@
+<ui version="4.0" >
+ <class>ExportDialog</class>
+ <widget class="QDialog" name="ExportDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>279</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Export Sheet</string>
+  </property>
+  <property name="sizeGripEnabled" >
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>9</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="whatsThis" >
+      <string>Here you can select what you want to include in the exported description.</string>
+     </property>
+     <property name="title" >
+      <string>Exported data:</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QRadioButton" name="rbGrid" >
+        <property name="whatsThis" >
+         <string>Select this to only export the grid, excluding sums, digits and candidates.</string>
+        </property>
+        <property name="text" >
+         <string>&amp;Grid only</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbGridSums" >
+        <property name="whatsThis" >
+         <string>Select this to only export the grid and sums, excluding digits and candidates.</string>
+        </property>
+        <property name="text" >
+         <string>Grid and &amp;sums</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbGridSumsDigits" >
+        <property name="whatsThis" >
+         <string>Select this to only export the grid, sums and digits, excluding candidates.</string>
+        </property>
+        <property name="text" >
+         <string>Grid, sums and &amp;digits</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbGridSumsCandidates" >
+        <property name="whatsThis" >
+         <string>Select this to export the entire sheet, including sums, digits and candidates.</string>
+        </property>
+        <property name="text" >
+         <string>Grid, sums, digits and &amp;candidates</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Textual representation:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>editText</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="editText" >
+       <property name="whatsThis" >
+        <string>This is the textual representation of your sheet. Others can use this text to view the original sheet.</string>
+       </property>
+       <property name="readOnly" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonCopyToClipboard" >
+       <property name="whatsThis" >
+        <string>Click here to copy the textual representation to the clipboard, so you can paste it in other applications.</string>
+       </property>
+       <property name="text" >
+        <string>&amp;Copy to clipboard</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonClose" >
+       <property name="whatsThis" >
+        <string>Click here to close the window.</string>
+       </property>
+       <property name="text" >
+        <string>Close</string>
+       </property>
+       <property name="default" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>rbGridSums</tabstop>
+  <tabstop>rbGridSumsDigits</tabstop>
+  <tabstop>editText</tabstop>
+  <tabstop>buttonCopyToClipboard</tabstop>
+  <tabstop>buttonClose</tabstop>
+  <tabstop>rbGrid</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonClose</sender>
+   <signal>clicked()</signal>
+   <receiver>ExportDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>287</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>169</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

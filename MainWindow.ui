@@ -1,0 +1,564 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="contextMenuPolicy" >
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle" >
+   <string>Kakuro Editor</string>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QHBoxLayout" >
+    <property name="margin" >
+     <number>9</number>
+    </property>
+    <property name="spacing" >
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="sheets" >
+      <property name="whatsThis" >
+       <string>Your Kakuro sheets are displayed here.</string>
+      </property>
+      <widget class="QWidget" name="sheet1" >
+       <attribute name="title" >
+        <string>Sheet 1</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_Help" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout" />
+   </widget>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionFileNew" />
+    <addaction name="actionFileOpen" />
+    <addaction name="separator" />
+    <addaction name="actionFileSave" />
+    <addaction name="actionFileSaveAs" />
+    <addaction name="separator" />
+    <addaction name="actionPrint" />
+    <addaction name="separator" />
+    <addaction name="actionQuit" />
+   </widget>
+   <widget class="QMenu" name="menu_Edit" >
+    <property name="title" >
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionUndo" />
+    <addaction name="actionRedo" />
+   </widget>
+   <widget class="QMenu" name="menu_Sheet" >
+    <property name="title" >
+     <string>&amp;Sheet</string>
+    </property>
+    <addaction name="actionSheetNew" />
+    <addaction name="separator" />
+    <addaction name="actionSheetMoveLeft" />
+    <addaction name="actionSheetMoveRight" />
+    <addaction name="actionSheetRename" />
+    <addaction name="actionSheetRemove" />
+    <addaction name="separator" />
+    <addaction name="actionCrop" />
+    <addaction name="actionEnlarge" />
+    <addaction name="separator" />
+    <addaction name="actionImport" />
+    <addaction name="actionExport" />
+    <addaction name="separator" />
+    <addaction name="actionSheetSaveAsImage" />
+   </widget>
+   <widget class="QMenu" name="menuTools" >
+    <property name="title" >
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionCalculateCandidates" />
+    <addaction name="actionCalculateSums" />
+    <addaction name="separator" />
+    <addaction name="actionClearCandidates" />
+    <addaction name="actionClearDigits" />
+    <addaction name="actionClearSums" />
+    <addaction name="separator" />
+    <addaction name="actionCheckPuzzle" />
+    <addaction name="actionSolvePuzzle" />
+   </widget>
+   <widget class="QMenu" name="menu_View" >
+    <property name="title" >
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionShowFileToolbar" />
+    <addaction name="actionShowSheetToolbar" />
+    <addaction name="actionShowToolsToolbar" />
+    <addaction name="separator" />
+    <addaction name="actionShowHints" />
+   </widget>
+   <addaction name="menu_File" />
+   <addaction name="menu_Edit" />
+   <addaction name="menu_Sheet" />
+   <addaction name="menu_View" />
+   <addaction name="menuTools" />
+   <addaction name="menu_Help" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QToolBar" name="fileToolbar" >
+   <property name="windowTitle" >
+    <string>File Toolbar</string>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <number>4</number>
+   </attribute>
+   <addaction name="actionFileNew" />
+   <addaction name="actionFileOpen" />
+   <addaction name="actionFileSave" />
+   <addaction name="actionPrint" />
+   <addaction name="separator" />
+   <addaction name="actionUndo" />
+   <addaction name="actionRedo" />
+   <addaction name="separator" />
+   <addaction name="actionAbout" />
+  </widget>
+  <widget class="QToolBar" name="sheetToolbar" >
+   <property name="windowTitle" >
+    <string>Sheet Toolbar</string>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <number>4</number>
+   </attribute>
+   <addaction name="actionSheetNew" />
+   <addaction name="actionSheetMoveLeft" />
+   <addaction name="actionSheetMoveRight" />
+   <addaction name="actionSheetRename" />
+   <addaction name="actionSheetRemove" />
+  </widget>
+  <widget class="QToolBar" name="toolsToolbar" >
+   <property name="windowTitle" >
+    <string>Tools Toolbar</string>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Vertical</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <number>1</number>
+   </attribute>
+   <addaction name="actionClearCandidates" />
+   <addaction name="actionClearDigits" />
+   <addaction name="actionClearSums" />
+   <addaction name="separator" />
+   <addaction name="actionCalculateCandidates" />
+   <addaction name="actionCalculateSums" />
+   <addaction name="actionCheckPuzzle" />
+   <addaction name="actionSolvePuzzle" />
+  </widget>
+  <action name="actionQuit" >
+   <property name="text" >
+    <string>&amp;Quit</string>
+   </property>
+   <property name="toolTip" >
+    <string>Quit the application</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionFileNew" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/FileNew.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;New...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Start new file</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionFileOpen" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/FileOpen.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Open existing file</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionFileSave" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/FileSave.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save current file</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionFileSaveAs" >
+   <property name="text" >
+    <string>Save &amp;As...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save current file at a new location</string>
+   </property>
+  </action>
+  <action name="actionAbout" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/About.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;About...</string>
+   </property>
+   <property name="toolTip" >
+    <string>About this application</string>
+   </property>
+  </action>
+  <action name="actionSheetNew" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SheetNew.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Add Blank</string>
+   </property>
+   <property name="toolTip" >
+    <string>Add a blank sheet</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+N</string>
+   </property>
+  </action>
+  <action name="actionSheetRemove" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SheetRemove.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Remove...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Remove the current sheet</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+W</string>
+   </property>
+  </action>
+  <action name="actionSheetRename" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SheetRename.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Re&amp;name...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Rename the current sheet</string>
+   </property>
+   <property name="shortcut" >
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionExport" >
+   <property name="text" >
+    <string>&amp;Export...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Export the current sheet</string>
+   </property>
+  </action>
+  <action name="actionCalculateCandidates" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/CalculateCandidates.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Calculate Candidates</string>
+   </property>
+   <property name="toolTip" >
+    <string>Calculate candidates for open cells</string>
+   </property>
+  </action>
+  <action name="actionSolvePuzzle" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SolvePuzzle.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Solve Puzzle</string>
+   </property>
+   <property name="toolTip" >
+    <string>Solve this puzzle</string>
+   </property>
+  </action>
+  <action name="actionClearCandidates" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/ClearCandidates.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Remove Candidates</string>
+   </property>
+   <property name="toolTip" >
+    <string>Remove all candidates from this sheet</string>
+   </property>
+  </action>
+  <action name="actionClearDigits" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/ClearDigits.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Remove Digits &amp;&amp; Candidates</string>
+   </property>
+   <property name="toolTip" >
+    <string>Remove digits and candidates from this sheet</string>
+   </property>
+  </action>
+  <action name="actionCheckPuzzle" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/CheckPuzzle.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Check Puzzle</string>
+   </property>
+   <property name="toolTip" >
+    <string>Check the validity of the current sheet</string>
+   </property>
+  </action>
+  <action name="actionGeneratePuzzle" >
+   <property name="text" >
+    <string>Generate New...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Generate a new puzzle</string>
+   </property>
+  </action>
+  <action name="actionEnlarge" >
+   <property name="text" >
+    <string>En&amp;large</string>
+   </property>
+   <property name="toolTip" >
+    <string>Enlarge this sheet</string>
+   </property>
+  </action>
+  <action name="actionCrop" >
+   <property name="text" >
+    <string>&amp;Crop</string>
+   </property>
+   <property name="toolTip" >
+    <string>Remove unused space from the sheet</string>
+   </property>
+  </action>
+  <action name="actionUndo" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/Undo.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Undo</string>
+   </property>
+   <property name="toolTip" >
+    <string>Undo last modification</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Z</string>
+   </property>
+   <property name="menuRole" >
+    <enum>QAction::QuitRole</enum>
+   </property>
+  </action>
+  <action name="actionRedo" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/Redo.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Re&amp;do</string>
+   </property>
+   <property name="toolTip" >
+    <string>Redo an undone modificiation</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionClearSums" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/ClearSums.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Remove Sums</string>
+   </property>
+   <property name="toolTip" >
+    <string>Remove all sums from this sheet</string>
+   </property>
+  </action>
+  <action name="actionCalculateSums" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/CalculateSums.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Calculate Sums</string>
+   </property>
+   <property name="toolTip" >
+    <string>Calculate sums for this sheet</string>
+   </property>
+  </action>
+  <action name="actionImport" >
+   <property name="text" >
+    <string>&amp;Import...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Import a new sheet</string>
+   </property>
+  </action>
+  <action name="actionShowFileToolbar" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show &amp;File Toolbar</string>
+   </property>
+   <property name="toolTip" >
+    <string>Show file toolbar</string>
+   </property>
+  </action>
+  <action name="actionShowSheetToolbar" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show &amp;Sheet Toolbar</string>
+   </property>
+   <property name="toolTip" >
+    <string>Show sheet toolbar</string>
+   </property>
+  </action>
+  <action name="actionShowToolsToolbar" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show &amp;Tools Toolbar</string>
+   </property>
+   <property name="toolTip" >
+    <string>Show tools toolbar</string>
+   </property>
+  </action>
+  <action name="actionSheetMoveLeft" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SheetMoveLeft.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Move Left</string>
+   </property>
+   <property name="toolTip" >
+    <string>Move this sheet one place to the left</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+Left</string>
+   </property>
+  </action>
+  <action name="actionSheetMoveRight" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/SheetMoveRight.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Move Right</string>
+   </property>
+   <property name="toolTip" >
+    <string>Move this sheet one place to the right</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+Right</string>
+   </property>
+  </action>
+  <action name="actionPrint" >
+   <property name="icon" >
+    <iconset resource="resources.qrc" >:/icons/FilePrint.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Print</string>
+   </property>
+   <property name="toolTip" >
+    <string>Print the current file</string>
+   </property>
+   <property name="shortcut" >
+    <string/>
+   </property>
+  </action>
+  <action name="actionSheetSaveAsImage" >
+   <property name="text" >
+    <string>Save As &amp;Image...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save the current sheet in an image file</string>
+   </property>
+  </action>
+  <action name="actionShowHints" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show &amp;Hints in Status Bar</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="resources.qrc" />
+ </resources>
+ <connections/>
+</ui>
