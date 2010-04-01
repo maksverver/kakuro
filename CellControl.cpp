@@ -276,6 +276,7 @@ void CellControl::paint(QPainter &painter, QRect rect)
 
 void CellControl::paintEvent(QPaintEvent *event)
 {
+    (void)event;  // unused
     QPainter painter(this);
     paint(painter, rect());
 }

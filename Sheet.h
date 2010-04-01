@@ -17,7 +17,7 @@ signals:
     void modified(int index);
 
 public:
-    static const int Sheet::cell_size;
+    static const int cell_size;
 
     Sheet(QUndoStack &undo_stack, QSize grid_size = QSize(1, 1), QWidget *parent = 0);
     Sheet(QUndoStack &undo_stack, const Puzzle &puzzle, QWidget *parent = 0);
