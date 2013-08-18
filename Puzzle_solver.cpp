@@ -41,7 +41,7 @@ int State::search(std::vector<int> *solution)
 
     return r;
 }
-#include <iostream>
+
 int State::solve(std::vector<int> *solution)
 {
     if(bit_count[1] == 0)

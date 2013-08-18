@@ -110,7 +110,8 @@ void State::calculateCandidates()
         for(int v = 0; v < vars; ++v)
             if(!fixed[v])
             {
-                int c = cands(hgrp[v], v)&cands(vgrp[v], v);
+                int c = cands(hgrp[v], v) & ~givens(hgrp[v],v) &
+                        cands(vgrp[v], v) & ~givens(vgrp[v],v);
                 if((cand[v]&c) != cand[v])
                 {
                     modified = true;
