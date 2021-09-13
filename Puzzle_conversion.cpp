@@ -1,4 +1,5 @@
 #include "Puzzle.h"
+
 #include <memory>
 
 const char * const digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef"
@@ -112,7 +113,7 @@ std::string Puzzle::toString(ExportOptions options) const
     return str;
 }
 
-Puzzle* Puzzle::fromString(const std::string &str)
+std::unique_ptr<Puzzle> Puzzle::fromString(const std::string &str)
 {
     std::vector<char> bytes;
     bytes.reserve(str.size());
@@ -125,7 +126,7 @@ Puzzle* Puzzle::fromString(const std::string &str)
     }
 
     size_t pos = 0;
-    std::auto_ptr<Puzzle> puzzle(new Puzzle);
+    std::unique_ptr<Puzzle> puzzle = std::make_unique<Puzzle>();
     Grid &grid = puzzle->grid;
     State &state = puzzle->state;
 
@@ -184,13 +185,13 @@ Puzzle* Puzzle::fromString(const std::string &str)
     // Parse sums
     state.sum.resize(state.grps);
     if(pos + state.grps > bytes.size())
-        return puzzle.release();
+        return puzzle;
     for(int g = 0; g < state.grps; ++g)
         state.sum[g] = bytes[pos++];
 
     // Parse candidates
     if(pos + (3*state.vars+1)/2 > bytes.size())
-        return puzzle.release();
+        return puzzle;
     for(int v = 0, avail = 0, data = 0; v < state.vars; ++v)
     {
         if(!avail)
@@ -205,5 +206,5 @@ Puzzle* Puzzle::fromString(const std::string &str)
         --avail;
     }
 
-    return puzzle.release();
+    return puzzle;
 }

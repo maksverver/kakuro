@@ -1,8 +1,11 @@
 #include "ExportDialog.h"
+
 #include <QClipboard>
 
-ExportDialog::ExportDialog(Puzzle *puzzle, QWidget *parent)
-    : QDialog(parent), puzzle(puzzle)
+#include <memory>
+
+ExportDialog::ExportDialog(std::unique_ptr<Puzzle> puzzle, QWidget *parent)
+    : QDialog(parent), puzzle(std::move(puzzle))
 {
     setupUi(this);
     connect(rbGrid,                 SIGNAL(toggled(bool)), this, SLOT(updateText()));
@@ -11,11 +14,6 @@ ExportDialog::ExportDialog(Puzzle *puzzle, QWidget *parent)
     connect(rbGridSumsCandidates,   SIGNAL(toggled(bool)), this, SLOT(updateText()));
     connect(buttonCopyToClipboard,  SIGNAL(clicked(bool)), this, SLOT(copyTextToClipboard()) );
     updateText();
-}
-
-ExportDialog::~ExportDialog()
-{
-    delete puzzle;
 }
 
 void ExportDialog::updateText()

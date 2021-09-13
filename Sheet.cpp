@@ -1,6 +1,8 @@
 #include "Sheet.h"
+
 #include <QMouseEvent>
 #include <QMessageBox>
+
 #include <algorithm>
 #include <memory>
 #include <iostream> // DEBUG
@@ -8,8 +10,11 @@
 class SetPuzzleCommand : public QUndoCommand
 {
 public:
-    SetPuzzleCommand(Sheet &sheet, Puzzle *before, Puzzle *after)
-        : sheet(sheet), before(before), after(after)
+    SetPuzzleCommand(
+            Sheet &sheet,
+            std::unique_ptr<Puzzle> before,
+            std::unique_ptr<Puzzle> after)
+        : sheet(sheet), before(std::move(before)), after(std::move(after))
     {
     }
 
@@ -27,7 +32,7 @@ public:
 
 private:
     Sheet &sheet;
-    std::auto_ptr<Puzzle> before, after;
+    std::unique_ptr<Puzzle> before, after;
 };
 
 
@@ -55,7 +60,7 @@ void Sheet::initialize()
     palette.setColor(QPalette::Shadow, Qt::black);
     setPalette(palette);
     setAutoFillBackground(true);
-    
+
     // Create lay-out
     new QGridLayout(this);
     layout()->setSpacing(2);
@@ -112,9 +117,9 @@ void Sheet::setGridSize(const QSize &size)
     l->setEnabled(true);
 }
 
-Puzzle *Sheet::toPuzzle() const
+std::unique_ptr<Puzzle> Sheet::toPuzzle() const
 {
-    std::auto_ptr<Puzzle> puzzle(new Puzzle);
+    std::unique_ptr<Puzzle> puzzle = std::make_unique<Puzzle>();
 
     Grid &grid = puzzle->grid;
     State &state = puzzle->state;
@@ -158,16 +163,16 @@ Puzzle *Sheet::toPuzzle() const
         if(++c == grid_size.width())
             c = 0;
     }
-    return puzzle.release();
+    return puzzle;
 }
 
 void Sheet::fromPuzzle(const Puzzle &puzzle)
 {
-    std::auto_ptr<Puzzle> old_puzzle(toPuzzle());
+    std::unique_ptr<Puzzle> old_puzzle(toPuzzle());
     if(puzzle != *old_puzzle)
     {
         undo_stack.push(
-            new SetPuzzleCommand(*this, old_puzzle.release(), new Puzzle(puzzle)) );
+            new SetPuzzleCommand(*this, std::move(old_puzzle), std::make_unique<Puzzle>(puzzle)) );
     }
 }
 
@@ -205,7 +210,7 @@ bool Sheet::empty()
     for(int n = 0; n < grid_size.width()*grid_size.height(); ++n)
         if(!cellAt(n).empty())
             return false;
-    return true; 
+    return true;
 }
 
 void Sheet::paint(QPainter &painter)

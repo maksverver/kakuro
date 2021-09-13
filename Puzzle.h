@@ -1,6 +1,7 @@
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -68,7 +69,7 @@ struct Puzzle
     Grid    grid;
     State   state;
 
-    static Puzzle* fromString(const std::string &str);
+    static std::unique_ptr<Puzzle> fromString(const std::string &str);
     std::string toString(ExportOptions options = exportGridSumsCandidates) const;
 
     bool operator==(const Puzzle &p) const { return grid == p.grid && state == p.state; }

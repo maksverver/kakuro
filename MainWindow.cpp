@@ -292,9 +292,9 @@ void MainWindow::requestImport()
     LineEditDialog dlg(this, tr("Import Sheet"), tr("Textual representation:"));
     if(dlg.exec() == QDialog::Accepted)
     {
-        std::auto_ptr<Puzzle> puzzle(Puzzle::fromString(
+        std::unique_ptr<Puzzle> puzzle(Puzzle::fromString(
             dlg.text().trimmed().toUtf8().constData()) );
-        if(!puzzle.get())
+        if(!puzzle)
         {
             QMessageBox::warning( this, tr("Invalid Data"),
                 tr("The text you entered does not describe a Kakuro grid!") );
@@ -565,7 +565,7 @@ bool MainWindow::saveFile(QString path)
     os << "%version kakuro 1 0\n";
     for(int n = 0; n < sheets->count(); ++n)
     {
-        std::auto_ptr<Puzzle> puzzle(sheetAt(n)->toPuzzle());
+        std::unique_ptr<Puzzle> puzzle(sheetAt(n)->toPuzzle());
         os << "\n"
            << puzzle->toString().c_str() << "\n"
            << "@title " << quoteWord(sheets->tabText(n)) << "\n";
@@ -602,7 +602,7 @@ bool MainWindow::openFile(QString path, bool first)
     {
         if(command.size() == 1)
         {
-            Puzzle *puzzle = Puzzle::fromString(command[0].toUtf8().constData());
+            std::unique_ptr<Puzzle> puzzle = Puzzle::fromString(command[0].toUtf8().constData());
             if(puzzle)
                 new_sheets.push_back(new Sheet(undo_stack, *puzzle));
         }
@@ -655,21 +655,21 @@ void MainWindow::openFiles(QStringList paths)
 
 void MainWindow::crop()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->grid.crop();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::enlarge()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->grid.enlarge();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::clearDigits()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->state.clearDigits();
     puzzle->state.clearCandidates();
     currentSheet()->fromPuzzle(*puzzle);
@@ -677,35 +677,35 @@ void MainWindow::clearDigits()
 
 void MainWindow::clearCandidates()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->state.clearCandidates();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::clearSums()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->state.clearSums();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::calculateCandidates()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->state.calculateCandidates();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::calculateSums()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     puzzle->state.calculateSums();
     currentSheet()->fromPuzzle(*puzzle);
 }
 
 void MainWindow::checkPuzzle()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     int n = puzzle->state.solve(0);
 
     if(n == -1)
@@ -723,7 +723,7 @@ void MainWindow::checkPuzzle()
 
 void MainWindow::solvePuzzle()
 {
-    std::auto_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
+    std::unique_ptr<Puzzle> puzzle(currentSheet()->toPuzzle());
     std::vector<int> solution;
     int n = puzzle->state.solve(&solution);
 

@@ -3,11 +3,13 @@
 
 #include "CellControl.h"
 #include "Puzzle.h"
+
 #include <QWidget>
 #include <QGridLayout>
 #include <QList>
 #include <QUndoStack>
 
+#include <memory>
 
 class Sheet : public QWidget
 {
@@ -25,7 +27,7 @@ public:
     const QSize &gridSize() { return grid_size; }
     void setGridSize(const QSize &size);
 
-    Puzzle *toPuzzle() const;
+    std::unique_ptr<Puzzle> toPuzzle() const;
     void fromPuzzle(const Puzzle &puzzle);
 
     bool empty();
