@@ -133,7 +133,7 @@ public:
                 delete widget[n];
     }
 
-    void undo() 
+    void undo()
     {
         for(int n = widget.size() - 1; n >= 0; --n)
             doit(widget[n], name[n], index[n]);
@@ -293,7 +293,7 @@ void MainWindow::requestImport()
     if(dlg.exec() == QDialog::Accepted)
     {
         std::auto_ptr<Puzzle> puzzle(Puzzle::fromString(
-            dlg.text().trimmed().toAscii().constData()) );
+            dlg.text().trimmed().toUtf8().constData()) );
         if(!puzzle.get())
         {
             QMessageBox::warning( this, tr("Invalid Data"),
@@ -419,7 +419,7 @@ void MainWindow::requestSaveSheetAsImage()
             << tr("Joint Photographic Experts Group (*.jpg *.jpeg)");
 
     QFileDialog dlg(this, tr("Save Sheet As Image"), getenv("HOME"));
-    dlg.setFilters(filters);
+    dlg.setNameFilters(filters);
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setConfirmOverwrite(true);
     if(dlg.exec() != QDialog::Accepted || dlg.selectedFiles().size() != 1)
@@ -428,7 +428,7 @@ void MainWindow::requestSaveSheetAsImage()
 
     const char *format = 0;
     for(int n = 0; n < filters.size() && n < formats.size(); ++n)
-        if(dlg.selectedFilter() == filters[n])
+        if(dlg.selectedNameFilter() == filters[n])
         {
             format = formats[n];
             break;
@@ -602,7 +602,7 @@ bool MainWindow::openFile(QString path, bool first)
     {
         if(command.size() == 1)
         {
-            Puzzle *puzzle = Puzzle::fromString(command[0].toAscii().constData());
+            Puzzle *puzzle = Puzzle::fromString(command[0].toUtf8().constData());
             if(puzzle)
                 new_sheets.push_back(new Sheet(undo_stack, *puzzle));
         }
@@ -646,7 +646,7 @@ void MainWindow::openFiles(QStringList paths)
         sheets->setCurrentIndex(0);
         if(paths.size() == 1)
             file_path = paths[0];
-        else 
+        else
             file_path.clear();
     }
     sheets->setUpdatesEnabled(true);

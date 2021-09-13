@@ -3,7 +3,8 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = kakuro
+QT += printsupport widgets
 DEPENDPATH += .
 INCLUDEPATH += .
 
