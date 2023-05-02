@@ -94,13 +94,15 @@ protected:
 CellControl::CellControl(QPoint pos, Sheet &sheet, QWidget *parent)
     : QWidget(parent), m_pos(pos), m_open(false),
       m_cands(0), m_hsum(0), m_vsum(0), m_dir(NoDirection), typing(false),
-      digit_font(QApplication::font(this).family(), 28, QFont::Bold),
-      cand_font(QApplication::font(this).family(), 11),
-      sum_font(QApplication::font(this).family(), 12),
+      digit_font(QApplication::font(this).family(), 24, QFont::Bold),
+      cand_font(QApplication::font(this).family(), 10),
+      sum_font(QApplication::font(this).family(), 10),
       m_sheet(sheet), undo_command(0)
 {
     setFocusPolicy(Qt::StrongFocus);
-    setMinimumSize(40, 40);
+
+    // See also cell_size in Sheet.cpp.
+    setMinimumSize(48, 48);
 
     setNeighbours(0, 0, 0, 0);
 }

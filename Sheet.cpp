@@ -35,8 +35,9 @@ private:
     std::unique_ptr<Puzzle> before, after;
 };
 
-
-const int Sheet::cell_size = 42;
+// This controls the cell size when printing or saving as images. To change the cell size in the UI,
+// change the arguments to setMinimumSize() in CellControl.cpp instead.
+const int Sheet::cell_size = 48;
 
 Sheet::Sheet(QUndoStack &undo_stack, QSize size, QWidget *parent)
     : QWidget(parent), undo_stack(undo_stack)
