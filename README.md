@@ -1,5 +1,6 @@
 # A graphical Kakuro editor and solver.
 
+![Screenshot of the main window](/screenshot.png)
 
 ## Build instructions
 
